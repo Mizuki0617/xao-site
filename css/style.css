@@ -503,6 +503,34 @@ img { display: block; width: 100%; }
 .lightbox-prev:hover,
 .lightbox-next:hover { opacity: 1; border-color: var(--color-accent); }
 
+/* ===== Reservation ===== */
+.reservation { border-top: 1px solid var(--color-border); }
+.reservation-body { text-align: center; }
+.reservation-text {
+  font-size: 0.95rem;
+  color: rgba(245, 240, 232, 0.8);
+  line-height: 2;
+  margin-bottom: 40px;
+}
+.btn-reservation {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 48px;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  transition: opacity 0.25s, transform 0.25s;
+  margin-bottom: 20px;
+}
+.btn-reservation:hover { opacity: 0.88; transform: translateY(-2px); }
+.reservation-note {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  letter-spacing: 0.1em;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
   :root { --section-gap: 80px; }
