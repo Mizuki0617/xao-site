@@ -21,6 +21,67 @@ document.querySelectorAll('.hero .fade-in').forEach(el => {
   setTimeout(() => el.classList.add('visible'), 300);
 });
 
+// ===== Gallery Carousel =====
+(function () {
+  const track    = document.getElementById('galleryTrack');
+  const prevBtn  = document.getElementById('galleryPrev');
+  const nextBtn  = document.getElementById('galleryNext');
+  const dotsWrap = document.getElementById('galleryDots');
+  if (!track) return;
+
+  const items = Array.from(track.querySelectorAll('.gallery-item'));
+  let perView = window.innerWidth <= 768 ? 2 : 3;
+  let current = 0;
+  const total  = items.length;
+
+  function getPerView() { return window.innerWidth <= 768 ? 2 : 3; }
+  function maxIndex()   { return Math.ceil(total / perView) - 1; }
+
+  // ドット生成
+  function buildDots() {
+    dotsWrap.innerHTML = '';
+    const pages = Math.ceil(total / perView);
+    for (let i = 0; i < pages; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `ページ ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    Array.from(dotsWrap.querySelectorAll('.gallery-dot')).forEach((d, i) => {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  function goTo(index) {
+    perView  = getPerView();
+    current  = Math.max(0, Math.min(index, maxIndex()));
+    const pct = (current * perView / total) * 100;
+    track.style.transform = `translateX(-${pct}%)`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current >= maxIndex();
+    updateDots();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  window.addEventListener('resize', () => {
+    perView = getPerView();
+    buildDots();
+    goTo(Math.min(current, maxIndex()));
+  });
+
+  // 初期化
+  items.forEach(item => { item.style.flex = `0 0 calc(100% / ${total})`; });
+  track.style.width = `${(total / perView) * 100}%`;
+  buildDots();
+  goTo(0);
+})();
+
 // ===== Lightbox =====
 const lightbox    = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
