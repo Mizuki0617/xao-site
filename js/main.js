@@ -131,6 +131,23 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight')  showNext();
 });
 
+// ===== DM テンプレート: コピーボタン =====
+(function () {
+  const btn = document.getElementById('btnCopy');
+  const txt = document.getElementById('dmText');
+  if (!btn || !txt) return;
+  btn.addEventListener('click', () => {
+    navigator.clipboard.writeText(txt.textContent.trim()).then(() => {
+      btn.textContent = 'コピーしました';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'コピー';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  });
+})();
+
 // ===== ナビ: スムーズスクロール（ヘッダー高さ分オフセット） =====
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {

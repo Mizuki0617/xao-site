@@ -504,7 +504,21 @@ img { display: block; width: 100%; }
 .lightbox-next:hover { opacity: 1; border-color: var(--color-accent); }
 
 /* ===== System ===== */
-.system { border-top: 1px solid var(--color-border); }
+.system {
+  border-top: 1px solid var(--color-border);
+  position: relative;
+  background-image: url('../images/system-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+.system::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 8, 6, 0.75);
+  z-index: 0;
+}
+.system .container { position: relative; z-index: 1; }
 .system-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
