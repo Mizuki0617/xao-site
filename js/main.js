@@ -122,6 +122,28 @@ document.getElementById('lightboxClose').addEventListener('click', closeLightbox
 document.getElementById('lightboxPrev').addEventListener('click', showPrev);
 document.getElementById('lightboxNext').addEventListener('click', showNext);
 
+// ご利用の流れ画像をクリックで拡大
+const flowImg = document.querySelector('.flow-img');
+if (flowImg) {
+  flowImg.style.cursor = 'zoom-in';
+  flowImg.addEventListener('click', () => {
+    lightboxImg.src = flowImg.src;
+    lightboxImg.alt = flowImg.alt;
+    document.getElementById('lightboxPrev').style.display = 'none';
+    document.getElementById('lightboxNext').style.display = 'none';
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+}
+
+// lightbox閉じたとき矢印を戻す
+const _origClose = closeLightbox;
+closeLightbox = function() {
+  _origClose();
+  document.getElementById('lightboxPrev').style.display = '';
+  document.getElementById('lightboxNext').style.display = '';
+};
+
 lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 
 document.addEventListener('keydown', e => {
