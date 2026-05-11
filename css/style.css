@@ -581,6 +581,26 @@ img { display: block; width: 100%; }
   margin-top: 1px;
 }
 
+.flow-wrap {
+  margin-top: 56px;
+  text-align: center;
+}
+.flow-label {
+  font-family: var(--font-serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: var(--color-muted);
+  margin-bottom: 24px;
+}
+.flow-img {
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+  filter: invert(1) opacity(0.88);
+  border-radius: 2px;
+}
+
 .premium-list {
   display: flex;
   flex-wrap: wrap;
