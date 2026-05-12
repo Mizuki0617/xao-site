@@ -181,3 +181,30 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     window.scrollTo({ top, behavior: 'smooth' });
   });
 });
+
+// ===== Instagram フィード =====
+(async function () {
+  const grid = document.getElementById('instagramGrid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('/api/instagram');
+    const data = await res.json();
+
+    if (!data.data || data.data.length === 0) {
+      grid.innerHTML = '<p class="instagram-error">投稿を取得できませんでした</p>';
+      return;
+    }
+
+    grid.innerHTML = data.data.map(post => {
+      const imgSrc = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url;
+      return `
+        <a href="${post.permalink}" target="_blank" rel="noopener" class="instagram-item">
+          <img src="${imgSrc}" alt="XAO Instagram投稿" loading="lazy">
+          <div class="instagram-overlay"><span>↗</span></div>
+        </a>`;
+    }).join('');
+  } catch (e) {
+    grid.innerHTML = '<p class="instagram-error">投稿を取得できませんでした</p>';
+  }
+})();
